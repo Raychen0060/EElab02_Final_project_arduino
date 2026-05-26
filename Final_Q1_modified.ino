@@ -76,7 +76,6 @@ void updateBuzzer() {
 
 // 新增：紀錄上次即時測量距離的時間
 unsigned long lastMeasureTime = 0;
-
 // ==========================================
 // 即時測距與更新喇叭邏輯 (完美避開顯示器閃爍)
 // ==========================================
@@ -84,20 +83,16 @@ void updateRealTimeDistance() {
   // 1. 只有在距離模式 (k == -1)，且每 100ms 才測量一次 (避免感測器互相干擾)
   if (k == -1 && (millis() - lastMeasureTime > 100)) {
     lastMeasureTime = millis();
-
     digitalWrite(Trig_Pins, HIGH);
     delayMicroseconds(10);
     digitalWrite(Trig_Pins, LOW);
-
     // 2. 關鍵技巧：將 timeout 設為 3000 微秒 (約測量 50 公分)
     // 這樣 pulseIn 最多只會卡住 3 毫秒，七段顯示器就不會閃爍！
     long duration = pulseIn(Echo_Pins, HIGH, 3000);
-
     if (duration == 0) {
       beepInterval = -1; // 沒量到或超過 50cm，靜音
     } else {
       int dist = duration / 29 / 2;
-      
       // 即時更新喇叭頻率
       if (dist > 20) beepInterval = -1;
       else if (dist > 15) beepInterval = 500;
