@@ -56,6 +56,7 @@ bool showFrameAndCheckButton(int left_char, int right_char) {
         if (buttonState == LOW) {
           k = -k; // 切換模式
           shownum(10); // 清空畫面
+          delay(frame_period);
           lastButtonState = reading; 
           return true; 
         }
