@@ -96,7 +96,7 @@ void displayTemperature() {
   int seq_len = sizeof(seq) / sizeof(seq[0]); // 字元序列長度
   // 利用 Sliding Window 依序顯示兩個字元
   for (int i = 0; i < seq_len - 1; i++) {
-    if (showFrameAndCheckButton(seq[i], seq[i + 1])) return; // 如果 true，立刻提早結束這個函式
+    if (showFrameAndCheckButton(seq[i], seq[i + 1])) return; // 如果 true，提早結束
   }
   if (showFrameAndCheckButton(seq[seq_len - 1], seq[0])) return;
 }
@@ -110,7 +110,7 @@ void displayDistance() {
   digitalWrite(Trig_Pins, HIGH);
   delayMicroseconds(10); //給予trig 10us TTL pulse,讓模組發射聲波
   digitalWrite(Trig_Pins, LOW);
-  duration = pulseIn(Echo_Pins, HIGH, 30000); // 紀錄echo電位從high到low的時間，就是超音波來回的時間 30ms (約 5 公尺)
+  duration = pulseIn(Echo_Pins, HIGH, 30000); // 超音波來回的時間30ms(約 5 公尺)
   int distance = duration * 0.034 / 2;
 
   // 定義跑馬燈的字元序列
